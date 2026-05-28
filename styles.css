@@ -1,0 +1,451 @@
+/* ============================================================
+   SHOTANDCUT — director/editor showreel landing
+   Stark editorial. Black frame, pale-grey canvas, oversized type.
+   ============================================================ */
+
+:root {
+  --bg-frame: #0a0a0a;        /* outer black frame */
+  --bg-canvas: #e9e7e2;       /* pale grey/bone inner canvas */
+  --ink: #0a0a0a;             /* primary type */
+  --ink-soft: #2c2c2c;
+  --ink-mute: #5a5a58;
+  --rule: #b9b6ad;            /* hairline dividers on canvas */
+  --reel-bg: #161616;
+  --reel-ink: #d6d3cb;
+  --accent: #d23a1a;          /* sparing red — REC / cinematic accent */
+
+  --pad-x: clamp(20px, 4vw, 56px);
+  --pad-y: clamp(18px, 3vw, 36px);
+
+  --font-display: "Archivo Black", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg-frame);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+
+a { color: inherit; text-decoration: none; }
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 14px;
+  z-index: 100;
+}
+.skip-link:focus { left: 16px; top: 16px; }
+
+/* ------------------------------------------------------------
+   Frame + canvas
+   ------------------------------------------------------------ */
+.frame {
+  min-height: 100vh;
+  padding: clamp(12px, 1.8vw, 24px);
+  background: var(--bg-frame);
+}
+
+.canvas {
+  background: var(--bg-canvas);
+  min-height: calc(100vh - 2 * clamp(12px, 1.8vw, 24px));
+  padding: var(--pad-y) var(--pad-x);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle paper grain on the canvas */
+.canvas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: radial-gradient(rgba(0,0,0,0.6) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: multiply;
+}
+
+/* ------------------------------------------------------------
+   Top bar
+   ------------------------------------------------------------ */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+  z-index: 2;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 56px;
+  height: auto;
+  display: block;
+  filter: invert(1); /* image is white-on-black; invert to black-on-canvas */
+}
+
+.brand-text {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--ink);
+}
+
+.nav {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink);
+  background: transparent;
+  transition: background 160ms ease, color 160ms ease;
+}
+.pill:hover, .pill:focus-visible {
+  background: var(--ink);
+  color: var(--bg-canvas);
+  outline: none;
+}
+
+/* ------------------------------------------------------------
+   Reel / hero panel
+   ------------------------------------------------------------ */
+.reel {
+  margin-top: clamp(24px, 4vw, 44px);
+  position: relative;
+  z-index: 2;
+}
+
+.reel-panel {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background:
+    radial-gradient(ellipse at 30% 40%, #2a2a2a 0%, #141414 55%, #0a0a0a 100%);
+  color: var(--reel-ink);
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  transition: transform 220ms ease;
+}
+.reel-panel:hover { transform: translateY(-2px); }
+.reel-panel:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* Film-frame letterbox bars */
+.reel-panel::before,
+.reel-panel::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;
+  height: 6%;
+  background: #000;
+  z-index: 3;
+}
+.reel-panel::before { top: 0; }
+.reel-panel::after { bottom: 0; }
+
+.reel-grain {
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg,
+      rgba(255,255,255,0.025) 0,
+      rgba(255,255,255,0.025) 1px,
+      transparent 1px,
+      transparent 3px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.reel-meta {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--reel-ink);
+  text-transform: uppercase;
+}
+.reel-tc { font-variant-numeric: tabular-nums; }
+.reel-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(210, 58, 26, 0.7);
+  animation: pulse 1.6s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+.reel-label { color: var(--accent); font-weight: 600; }
+
+.reel-center {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  text-align: center;
+  padding: 24px;
+}
+
+.play-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 1.5px solid var(--reel-ink);
+  color: var(--reel-ink);
+  transition: background 200ms ease, color 200ms ease, transform 200ms ease;
+}
+.reel-panel:hover .play-mark {
+  background: var(--reel-ink);
+  color: var(--reel-bg);
+  transform: scale(1.04);
+}
+.play-mark svg { margin-left: 4px; }
+
+.reel-cta {
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.2vw, 28px);
+  letter-spacing: 0.06em;
+  color: var(--reel-ink);
+  text-transform: uppercase;
+}
+
+.reel-footer {
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  right: 18px;
+  z-index: 4;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--reel-ink);
+  opacity: 0.85;
+}
+
+/* ------------------------------------------------------------
+   Oversized type block
+   ------------------------------------------------------------ */
+.type-block {
+  margin-top: clamp(18px, 2.5vw, 28px);
+  position: relative;
+  z-index: 2;
+}
+
+.bigtype {
+  font-family: var(--font-display);
+  /* Fluid: full word fits the canvas width.
+     SHOTANDCUT = 10 chars. Tuned with letter-spacing so it touches the edges. */
+  font-size: clamp(40px, 11.8vw, 200px);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+  margin: 0;
+  color: var(--ink);
+  text-transform: uppercase;
+  /* slight vertical stretch for a condensed/cinematic feel */
+  transform: scaleY(1.12);
+  transform-origin: left bottom;
+  white-space: nowrap;
+}
+
+.bigtype-line { display: block; }
+
+.taglines {
+  margin-top: clamp(10px, 1.5vw, 18px);
+  display: flex;
+  justify-content: flex-end;
+  gap: 28px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--rule);
+  padding-top: 14px;
+}
+.role,
+.disciplines {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 600;
+}
+.disciplines { color: var(--ink-mute); font-weight: 500; }
+
+/* ------------------------------------------------------------
+   Section heads (Work, Contact)
+   ------------------------------------------------------------ */
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  border-top: 1px solid var(--rule);
+  padding-top: 18px;
+  margin-bottom: 22px;
+}
+.section-num {
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--ink-mute);
+  font-variant-numeric: tabular-nums;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 32px);
+  letter-spacing: 0.02em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Work */
+.work {
+  margin-top: clamp(48px, 7vw, 96px);
+  position: relative;
+  z-index: 2;
+}
+.work-copy {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4.2vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px 0;
+  text-transform: uppercase;
+  max-width: 18ch;
+}
+.work-sub {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink-mute);
+  max-width: 56ch;
+}
+
+/* Contact */
+.contact {
+  margin-top: clamp(48px, 7vw, 96px);
+  position: relative;
+  z-index: 2;
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  max-width: 900px;
+}
+.contact-link {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  transition: background 160ms ease, padding 160ms ease;
+}
+.contact-link:hover {
+  background: var(--ink);
+  color: var(--bg-canvas);
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.contact-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.contact-link:hover .contact-label { color: var(--bg-canvas); }
+.contact-value {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.6vw, 32px);
+  letter-spacing: 0.005em;
+  word-break: break-all;
+}
+
+/* ------------------------------------------------------------
+   Footer
+   ------------------------------------------------------------ */
+.footbar {
+  margin-top: clamp(56px, 8vw, 120px);
+  border-top: 1px solid var(--ink);
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  position: relative;
+  z-index: 2;
+}
+.foot-mid { color: var(--ink-mute); }
+
+/* ------------------------------------------------------------
+   Responsive
+   ------------------------------------------------------------ */
+@media (max-width: 720px) {
+  .brand-mark { width: 44px; }
+  .brand-text { display: none; }
+
+  .nav { gap: 6px; }
+  .pill { padding: 7px 12px; font-size: 11px; }
+
+  .taglines { justify-content: flex-start; gap: 18px; }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 12px; }
+
+  .footbar { flex-direction: column; gap: 6px; }
+  .foot-mid { order: 3; }
+
+  .reel-meta, .reel-footer { font-size: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
