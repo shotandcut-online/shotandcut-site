@@ -83,7 +83,6 @@ python3 -m http.server 8080
 
 - Black outer frame, pale bone canvas (`#e9e7e2`), oversized condensed black
   display type (Archivo Black, scaled vertically). Inter for UI.
-- Reel hero is a cinematic still-style panel (letterboxed, TC + REC dot) that
-  links out to the Livid showreel — Livid does not expose an embeddable
-  iframe at the standard `/watch/` URL.
+- Reel hero embeds the Livid player at `https://livid.com/embed/T2FL54Derqdy?transparent=0&playsinline=1`.
+  A direct fallback link to the standard `/watch/` page sits underneath.
 - Monochrome. No gradients, no decorative imagery, no stock photography.

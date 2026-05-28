@@ -59,27 +59,18 @@
 
         <!-- Hero / reel panel -->
         <section id="reel" class="reel" aria-label="Showreel">
-          <a class="reel-panel" href="https://livid.com/watch/T2FL54Derqdy" target="_blank" rel="noopener noreferrer" aria-label="Watch the Shotandcut showreel on Livid">
-            <div class="reel-grain" aria-hidden="true"></div>
-            <div class="reel-meta" aria-hidden="true">
-              <span class="reel-tc">TC 01:00:00:00</span>
-              <span class="reel-dot"></span>
-              <span class="reel-label">REC</span>
-            </div>
-
-            <div class="reel-center" aria-hidden="true">
-              <span class="play-mark">
-                <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true">
-                  <path d="M6 4 L20 12 L6 20 Z" fill="currentColor"/>
-                </svg>
-              </span>
-              <span class="reel-cta">Watch showreel</span>
-            </div>
-
-            <div class="reel-footer" aria-hidden="true">
-              <span>SHOWREEL / 2025</span>
-              <span>LIVID ↗</span>
-            </div>
+          <div class="reel-panel" aria-label="Embedded Shotandcut showreel">
+            <iframe
+              class="reel-iframe"
+              src="https://livid.com/embed/T2FL54Derqdy?transparent=0&playsinline=1"
+              title="Shotandcut showreel on Livid"
+              loading="eager"
+              allow="autoplay; fullscreen; picture-in-picture; encrypted-media"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <a class="reel-fallback" href="https://livid.com/watch/T2FL54Derqdy" target="_blank" rel="noopener noreferrer">
+            Open showreel on Livid ↗
           </a>
         </section>
 
